@@ -1,25 +1,54 @@
 import { useEffect, useState } from "react";
-import { useFetch } from "./customHooks/useFetch";
+// import { useFetch } from "./customHooks/useFetch";
 import { BasicInput } from "./components/basicInput";
 import { BasicButton } from "./components/basicButton";
 import bgDark from "./assets/img/bg-dark.png"
 import bgLight from "./assets/img/bg-light.png"
-import axios from 'axios';
+import { getWeatherData } from "./api/getData";
+import SearchIcon from '@mui/icons-material/Search';
 import "./App.css";
 
-
 function App() {
-
   const [weatherData, setWeatherData] = useState(null);
-  const [location, setLocation] = useState('')
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=92cb706d92ce5ba5ac5f4b925add5bc4
-  `
-  const searchLocation = () => {
-    axios.get(url).then(resp => {
-      setWeatherData(resp)
-    }).catch(error => {
-      console.log(error)
-    })
+  const [location, setLocation] = useState('');
+  const [date, setDate] = useState(null);
+  const [historyList, setHistoryList] = useState([])
+  const [notFound, setNotFound] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const searchLocation = (value) => {
+    console.log('value: ', value)
+    console.log('click')
+    const getCurrentDateTime = (new Date).toLocaleString()
+    if(value){
+      getWeatherData(value).then(res => {
+        const {data} = res
+        setWeatherData(data)
+        setDate(getCurrentDateTime)
+        pushToHistoryList(res, getCurrentDateTime)
+      }).catch(error => {
+        setErrorMessage('Not Found')
+        console.log(error)
+      })
+    }
+
+    if(value == ''){
+      setNotFound(true)
+      setErrorMessage('Please Enter City/Country')
+    }
+  }
+
+  useEffect(() => {
+    searchLocation('spain')
+  }, [])
+
+  const pushToHistoryList = (res, getCurrentDateTime) => {
+    const {data} = res
+    let obj = {}
+    obj["countryName"] = data.name
+    obj["time"] = getCurrentDateTime
+    const newHistoryList = [...historyList, obj]
+    setHistoryList(newHistoryList)
   }
 
   const handleInput = (e) => {
@@ -29,24 +58,28 @@ function App() {
   console.log('weatherData: ', weatherData)
   
   let countryName, temperature, highest, lowest, dateTime, humidity, isCloud;
-  if(weatherData){
-    const { data } = weatherData;
 
-    countryName = data.name;
-    temperature = data.main.temp;
-    highest = data.main.temp_max;
-    lowest = data.main.temp_min;
-    dateTime = data.timezone;
-    humidity = data.main.humidity;
-    isCloud = data.clouds.all ? true : false
+  if(weatherData){
+    countryName = weatherData.name;
+    temperature = weatherData.main.temp;
+    highest = weatherData.main.temp_max;
+    lowest = weatherData.main.temp_min;
+    dateTime = weatherData.timezone;
+    humidity = weatherData.main.humidity;
+    isCloud = weatherData.clouds.all ? true : false
   }
 
+  const darkPrimary = `rgba(26, 26, 26, 0.5)`
+  const darkSecondary = `rgba(26, 26, 26, 0.3)`
+  const darkButton = `rgba(40, 18, 77, 1)`;
+  
+  console.log('historyList', historyList)
   return (
     <div className="containerDark">
 
         <div className="subContainer">
 
-          <div className="search">
+          <div className="searchContainer">
             <div className="inputContainer">
               <BasicInput 
                 value={location}
@@ -57,14 +90,21 @@ function App() {
             <div className="blankContainer"/>
             <div className="buttonContainer">
               <BasicButton 
-                buttonText={"Search"} 
+                buttonIcon={<SearchIcon sx={{fontSize: 40}}/>}
                 handleOnClick={searchLocation}
+                value={location}
               />
             </div>
             
           </div>
+          {
+            notFound && 
+            <div className="notFoundContainer">
+                <p>{errorMessage}</p>
+            </div>
+          }
 
-          <div className="displayContainer">
+          <div className="displayContainer" style={{backgroundColor: darkSecondary}}>
               <div className='top'>
                     <div className="topLeft">
                         <p>Today's Weather</p>
@@ -92,7 +132,7 @@ function App() {
                       </div>
 
                       <div>
-                          <p>{dateTime ? dateTime : '01-09-2022 09:41am'}</p>
+                          <p>{date ? date : '01-09-2022 09:41am'}</p>
                       </div>
 
                       <div>
@@ -104,8 +144,9 @@ function App() {
                       </div>
                 </div>
       
-              <div className='bottom'>
+              <div className='bottom' style={{backgroundColor: darkSecondary}}>
                   <p>Search History</p>
+
               </div>
           </div>
           

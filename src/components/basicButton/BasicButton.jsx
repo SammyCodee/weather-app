@@ -1,13 +1,18 @@
 import React from 'react'
 import './button.css'
 
-const BasicButton = ({buttonText, handleOnClick}) => {
+const BasicButton = ({buttonText, buttonIcon, handleOnClick, value}) => {
     return (
         <button 
-            onClick={() => handleOnClick()}
-            type='button'
+            onClick={() => handleOnClick(value)}
         >
-            <p>{buttonText}</p>
+            {
+                buttonText && <p>{buttonText}</p>
+            }
+            {
+                buttonIcon && buttonIcon
+            }
+            
         </button>
     )
 }

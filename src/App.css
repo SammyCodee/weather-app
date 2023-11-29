@@ -32,7 +32,7 @@ h1 {
   padding: 1.5rem 0;
 }
 
-.search {
+.searchContainer {
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -40,7 +40,7 @@ h1 {
 }
 
 .inputContainer {
-  width: 85%;
+  width: 87%;
   height: 5vh
 }
 
@@ -51,12 +51,27 @@ h1 {
 }
 
 .buttonContainer {
-  width: 10%;
+  width: 8%;
   height: 5vh
 }
 
+.notFoundContainer {
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  padding: 0.5rem;
+  border-style: solid;
+  border-width: thin;
+  border-color: red;
+  background-color:  #ffcccc;
+}
+
+.notFoundContainer p {
+  color: black
+}
+
 .displayContainer {
-  background-color: rgba(26, 26, 26, 0.3);
+  /* background-color: rgba(26, 26, 26, 0.3); */
   border-radius: 1.5rem;
   margin-top: 10rem;
   padding: 2rem;
@@ -106,7 +121,7 @@ h1 {
 
 .bottom {
   border-radius: 1.5rem;
-  background-color: rgba(26, 26, 26, 0.3);
+  /* background-color: rgba(26, 26, 26, 0.3); */
   display: flex;
   padding: 1rem;
   margin-top: 1rem;

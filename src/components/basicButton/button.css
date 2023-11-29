@@ -6,3 +6,8 @@ button {
     border-radius: 1rem;
     border-style: none;
 }
+
+.iconContainer {
+    height: 100%;
+    width: 100%;
+}
