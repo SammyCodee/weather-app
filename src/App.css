@@ -1,12 +1,12 @@
 p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: white;
   font-weight: lighter;
   margin: 0;
 }
 
 h1 {
-  font-size: 8rem;
+  font-size: 4rem;
   color: white;
   font-weight: bold;
   margin: 0;
@@ -41,7 +41,7 @@ h1 {
 
 .inputContainer {
   width: 87%;
-  height: 5vh
+  height: 8vh
 }
 
 .blankContainer {
@@ -52,7 +52,7 @@ h1 {
 
 .buttonContainer {
   width: 8%;
-  height: 5vh
+  height: 8vh
 }
 
 .notFoundContainer {
@@ -73,7 +73,7 @@ h1 {
 .displayContainer {
   /* background-color: rgba(26, 26, 26, 0.3); */
   border-radius: 1.5rem;
-  margin-top: 10rem;
+  margin-top: 8rem;
   padding: 2rem;
   flex-direction: column;
   z-index: 2;
@@ -89,8 +89,8 @@ h1 {
 }
 
 .topRight {
-  height: 25rem;
-  width: 25rem;
+  height: 26vh;
+  width: 13vw;
   background-image: url('./assets/img/sun.png');
   /* Center and scale the image nicely */
   background-position: center;
@@ -98,8 +98,8 @@ h1 {
   background-size: cover;
   z-index: 100;
   position: absolute;
-  top: 10%;
-  right: 25%;
+  top: 12vh;
+  right: 26vw;
 }
 
 .infoSecondRowContainer {
@@ -119,11 +119,33 @@ h1 {
   margin: 10px 0;
 }
 
+.location p {
+  font-weight: bolder;
+}
+
 .bottom {
   border-radius: 1.5rem;
   /* background-color: rgba(26, 26, 26, 0.3); */
-  display: flex;
-  padding: 1rem;
+  padding: 1.5rem;
   margin-top: 1rem;
 }
+
+.historyContainer {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.historyContainer h1{
+  padding: 3rem
+}
+
+.historyItemContainer {
+  border-radius: 1.5rem;
+  width: 100%;
+  margin: 0.5rem;
+}
+
 

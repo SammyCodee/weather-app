@@ -1,12 +1,16 @@
+import "./App.css";
 import { useEffect, useState } from "react";
 // import { useFetch } from "./customHooks/useFetch";
-import { BasicInput } from "./components/basicInput";
-import { BasicButton } from "./components/basicButton";
+import SearchIcon from '@mui/icons-material/Search';
+
 import bgDark from "./assets/img/bg-dark.png"
 import bgLight from "./assets/img/bg-light.png"
+
 import { getWeatherData } from "./api/getData";
-import SearchIcon from '@mui/icons-material/Search';
-import "./App.css";
+
+import { BasicInput } from "./components/basicInput";
+import { BasicButton } from "./components/basicButton";
+import HistoryItem from "./components/historyItem/HistoryItem";
 
 function App() {
   const [weatherData, setWeatherData] = useState(null);
@@ -17,15 +21,15 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('')
 
   const searchLocation = (value) => {
-    console.log('value: ', value)
-    console.log('click')
     const getCurrentDateTime = (new Date).toLocaleString()
     if(value){
       getWeatherData(value).then(res => {
         const {data} = res
         setWeatherData(data)
         setDate(getCurrentDateTime)
+        
         pushToHistoryList(res, getCurrentDateTime)
+        
       }).catch(error => {
         setErrorMessage('Not Found')
         console.log(error)
@@ -43,6 +47,7 @@ function App() {
   }, [])
 
   const pushToHistoryList = (res, getCurrentDateTime) => {
+    console.log('enter push')
     const {data} = res
     let obj = {}
     obj["countryName"] = data.name
@@ -57,23 +62,24 @@ function App() {
 
   console.log('weatherData: ', weatherData)
   
-  let countryName, temperature, highest, lowest, dateTime, humidity, isCloud;
+  let countryName, temperature, highest, lowest, humidity, isCloud;
 
   if(weatherData){
     countryName = weatherData.name;
     temperature = weatherData.main.temp;
     highest = weatherData.main.temp_max;
     lowest = weatherData.main.temp_min;
-    dateTime = weatherData.timezone;
     humidity = weatherData.main.humidity;
     isCloud = weatherData.clouds.all ? true : false
   }
 
   const darkPrimary = `rgba(26, 26, 26, 0.5)`
   const darkSecondary = `rgba(26, 26, 26, 0.3)`
-  const darkButton = `rgba(40, 18, 77, 1)`;
+  const darkButton = `rgba(40, 18, 77, 1)`
+  const darkText = `rgba(255, 255, 255, 0.5)`
   
   console.log('historyList', historyList)
+
   return (
     <div className="containerDark">
 
@@ -90,7 +96,7 @@ function App() {
             <div className="blankContainer"/>
             <div className="buttonContainer">
               <BasicButton 
-                buttonIcon={<SearchIcon sx={{fontSize: 40}}/>}
+                buttonIcon={<SearchIcon sx={{fontSize: '1.5rem'}}/>}
                 handleOnClick={searchLocation}
                 value={location}
               />
@@ -146,7 +152,19 @@ function App() {
       
               <div className='bottom' style={{backgroundColor: darkSecondary}}>
                   <p>Search History</p>
-
+                  <div className="historyContainer">
+                      {historyList ? historyList.map(data => {
+                        return (
+                          <div className="historyItemContainer" style={{backgroundColor: darkButton}}>
+                              <HistoryItem 
+                                key={`${data.location}-${data.key}`}
+                                location={data.countryName}
+                                time={data.time}
+                              />
+                          </div>
+                        )
+                      }) : <h1>No Record</h1>}
+                  </div>
               </div>
           </div>
           

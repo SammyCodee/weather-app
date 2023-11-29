@@ -1,0 +1,22 @@
+
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 1.5rem;
+}
+
+.leftContainer p {
+    font-weight: bolder;
+    color: white
+}
+
+.rightContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.rightContainer p {
+    color: rgba(255, 255, 255, 0.5)
+}
