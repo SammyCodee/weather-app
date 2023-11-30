@@ -1,3 +1,4 @@
+
 p {
   font-size: 1.2rem;
   color: white;
@@ -36,24 +37,23 @@ body {
 .searchContainer {
   text-align: center;
   display: flex;
+  align-items: center;
   flex-direction: row;
-  /* background-color: yellow; */
 }
 
 .inputContainer {
-  width: 87%;
-  height: 8vh
+  width: calc(100% - 2vw);
+  height: calc(8vh - 1vw);
 }
 
 .blankContainer {
-  width: 5%;
-  margin: 0 0.4rem;
-
+  width: 2vh;
+  margin: 0 1rem;
 }
 
 .buttonContainer {
-  width: 8%;
-  height: 8vh
+  width: calc(12% - 2vw);
+  height: calc(8vh - 1vw);
 }
 
 .notFoundContainer {
@@ -77,7 +77,6 @@ body {
 }
 
 .displayContainer {
-  /* background-color: rgba(26, 26, 26, 0.3); */
   border-radius: 1.5rem;
   margin-top: 8rem;
   padding: 2rem;
@@ -85,7 +84,7 @@ body {
   z-index: 2;
 }
 
-.top {
+.displayTop {
   display: flex;
   flex-direction: row;
 }
@@ -95,8 +94,8 @@ body {
 }
 
 .topRight {
-  height: 26vh;
-  width: 13vw;
+  height: 10vw;
+  width: 10vw;
   background-image: url('./assets/img/sun.png');
   /* Center and scale the image nicely */
   background-position: center;
@@ -104,7 +103,7 @@ body {
   background-size: cover;
   z-index: 100;
   position: absolute;
-  top: 12vh;
+  top: 10vh;
   right: 26vw;
 }
 
@@ -129,7 +128,7 @@ body {
   font-weight: bolder;
 }
 
-.bottom {
+.displayBottom {
   border-radius: 1.5rem;
   /* background-color: rgba(26, 26, 26, 0.3); */
   padding: 1.5rem;
@@ -148,6 +147,7 @@ body {
   border-radius: 1.5rem;
   width: 100%;
   margin: 0.5rem;
+  
 }
 
 @keyframes shake {
@@ -168,3 +168,94 @@ body {
   }
 }
 
+@media only screen and (max-width: 375px) {
+  p {
+    font-size: calc(1.2rem/2.5);
+  }
+  
+  h1 {
+    font-size: calc(4.2rem/2.5);
+  }
+  .subContainer{
+    width: 100%;
+  }
+
+  .topRight {
+    height: calc(26vw + 20px);
+    width: calc(26vw + 20px);
+    top: calc(16vw + 100px);
+    right: 10vw;
+  }
+
+  .inputContainer {
+    width: 100%;
+    height: 12vw;
+  }
+
+  .buttonContainer {
+    width: 20%;
+    height: 12vw;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  p {
+    font-size: calc(1.2rem/1.6);
+  }
+  
+  h1 {
+    font-size: calc(4.2rem/1.6);
+  }
+
+  .subContainer{
+    width: 100%;
+  }
+
+  .topRight {
+    height: calc(32vw + 20px);
+    width: calc(32vw + 20px);
+    top: calc(10vw + 60px);
+    right: 8vw;
+  }
+
+  .inputContainer {
+    width: 100%;
+    height: 12vw;
+  }
+
+  .buttonContainer {
+    width: 16%;
+    height: 12vw;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  p {
+    font-size: calc(1.2rem/1.2);
+  }
+  
+  h1 {
+    font-size: calc(4.2rem/1.2);
+  }
+
+  .subContainer{
+    width: 80%;
+  }
+
+  .topRight {
+    height: calc(26vw + 20px);
+    width: calc(26vw + 20px);
+    top: calc(10vw + 60px);
+    right: 12vw;
+  }
+
+  .inputContainer {
+    width: 100%;
+    height: 8vw;
+  }
+
+  .buttonContainer {
+    width: 12%;
+    height: 8vw;
+  }
+}

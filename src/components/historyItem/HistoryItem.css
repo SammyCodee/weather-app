@@ -11,6 +11,14 @@
 
 .historyItemLeftContainer {
     width: 50%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.historyItemLeftContainer h1 {
+    font-size: 0.8rem;
 }
 
 .historyItemLeftContainer p {
@@ -20,10 +28,10 @@
 
 .historyItemRightContainer {
     width: 50%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: auto;
     justify-content: flex-end;
 }
 

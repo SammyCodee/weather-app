@@ -1,12 +1,10 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-// import { useFetch } from "./customHooks/useFetch";
+import {useMediaWidth} from "./customHooks/useMediaWidth"
 import SearchIcon from '@mui/icons-material/Search';
 
-import bgDark from "./assets/img/bg-dark.png"
-import bgLight from "./assets/img/bg-light.png"
-
 import { getWeatherData } from "./api/getData";
+import {small_screen} from './utils/mediaScreenSize';
 
 import { BasicInput } from "./components/basicInput";
 import { BasicButton } from "./components/basicButton";
@@ -47,7 +45,6 @@ function App() {
         setDate(getCurrentDateTime)
         setNotFound(false)
         pushToHistoryList(res, getCurrentDateTime)
-        console.log('api called')
       }).catch(error => {
         setNotFound(true)
         setErrorMessage('Not Found')
@@ -90,7 +87,6 @@ function App() {
   
   let countryName, temperature, highest, lowest, humidity, isCloud;
 
-  console.log(weatherData)
   if(weatherData){
     countryName = weatherData.name;
     temperature = weatherData.main.temp;
@@ -115,7 +111,7 @@ function App() {
               <BasicInput 
                 value={location}
                 handleInput={handleInput}
-                placeholder={"Country"}
+                placeholder={"Country/City"}
               />
             </div>
             <div className="blankContainer"/>
@@ -136,7 +132,7 @@ function App() {
           }
 
           <div className="displayContainer" style={{backgroundColor: darkSecondary}}>
-              <div className='top'>
+              <div className='displayTop'>
                     <div className="topLeft">
                         <p>Today's Weather</p>
                         <div>
@@ -175,7 +171,7 @@ function App() {
                       </div>
                 </div>
       
-              <div className='bottom' style={{backgroundColor: darkSecondary}}>
+              <div className='displayBottom' style={{backgroundColor: darkSecondary}}>
                   <p>Search History</p>
                   <div className="historyItemWrapper">
                       {historyList && historyList.map((data, index) => {
@@ -192,6 +188,7 @@ function App() {
                                 handleSearch={searchLocation}
                                 handleDelete={deleteFromHistoryList}
                                 fullList={historyList}
+                                iconSize={useMediaWidth <= small_screen ? 10 : 20}
                               />
                           </div>
                         )
