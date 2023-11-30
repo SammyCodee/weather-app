@@ -1,0 +1,10 @@
+.roundButtonContainer {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: thin;
+    border-color: rgba(255, 255, 255, 0.5);
+    background-color: transparent;
+    padding: 0.5rem;
+}

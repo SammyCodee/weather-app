@@ -1,32 +1,33 @@
 p {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: white;
   font-weight: lighter;
   margin: 0;
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 4.2rem;
   color: white;
   font-weight: bold;
   margin: 0;
 }
 
-.containerDark {
-  height: 100vh;
+body {
   background-image: url('./assets/img/bg-dark.png');
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat;  
   background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.containerDark {
   display:flex;
   justify-content: center;
 }
 
 .subContainer {
-  height: 100vh;
+  height: auto;
   width: 50%;
-  /* background-color: red; */
   display:flex;
   flex-direction: column;
   padding: 1.5rem 0;
@@ -64,6 +65,11 @@ h1 {
   border-width: thin;
   border-color: red;
   background-color:  #ffcccc;
+
+  animation: shake 1.5s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .notFoundContainer p {
@@ -130,7 +136,7 @@ h1 {
   margin-top: 1rem;
 }
 
-.historyContainer {
+.historyItemWrapper {
   display: flex;
   margin-top: 1rem;
   justify-content: center;
@@ -138,14 +144,27 @@ h1 {
   flex-direction: column;
 }
 
-.historyContainer h1{
-  padding: 3rem
-}
-
-.historyItemContainer {
+.historyItemSubWrapper {
   border-radius: 1.5rem;
   width: 100%;
   margin: 0.5rem;
 }
 
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
 

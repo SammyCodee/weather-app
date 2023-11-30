@@ -20,6 +20,24 @@ function App() {
   const [notFound, setNotFound] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
+  const initDataCall = (value) => {
+    const getCurrentDateTime = (new Date).toLocaleString()
+    if(value){
+      getWeatherData(value).then(res => {
+        const {data} = res
+        setWeatherData(data)
+        setDate(getCurrentDateTime)
+      }).catch(error => {
+        console.log('error: ', error)
+      })
+    }
+
+    if(value == ''){
+      setNotFound(true)
+      setErrorMessage('Something went wrong')
+    }
+  }
+
   const searchLocation = (value) => {
     const getCurrentDateTime = (new Date).toLocaleString()
     if(value){
@@ -27,12 +45,13 @@ function App() {
         const {data} = res
         setWeatherData(data)
         setDate(getCurrentDateTime)
-        
+        setNotFound(false)
         pushToHistoryList(res, getCurrentDateTime)
-        
+        console.log('api called')
       }).catch(error => {
+        setNotFound(true)
         setErrorMessage('Not Found')
-        console.log(error)
+        console.log('error: ', error)
       })
     }
 
@@ -42,43 +61,49 @@ function App() {
     }
   }
 
+  //initial location is spain
   useEffect(() => {
-    searchLocation('spain')
+    initDataCall('spain')
   }, [])
-
+  
   const pushToHistoryList = (res, getCurrentDateTime) => {
-    console.log('enter push')
     const {data} = res
     let obj = {}
     obj["countryName"] = data.name
     obj["time"] = getCurrentDateTime
-    const newHistoryList = [...historyList, obj]
+    const newHistoryList = [...historyList]
+    newHistoryList.unshift(obj)
     setHistoryList(newHistoryList)
+  }
+
+  const deleteFromHistoryList = (index, list) => {
+    if(list.length > -1){
+      list.splice(index, 1)
+      const newHistoryList = [...list]
+      setHistoryList(newHistoryList)
+    }
   }
 
   const handleInput = (e) => {
     setLocation(e.target.value)
   }
-
-  console.log('weatherData: ', weatherData)
   
   let countryName, temperature, highest, lowest, humidity, isCloud;
 
+  console.log(weatherData)
   if(weatherData){
     countryName = weatherData.name;
     temperature = weatherData.main.temp;
     highest = weatherData.main.temp_max;
     lowest = weatherData.main.temp_min;
     humidity = weatherData.main.humidity;
-    isCloud = weatherData.clouds.all ? true : false
+    isCloud = weatherData.clouds.all > 50 ? true : false
   }
 
   const darkPrimary = `rgba(26, 26, 26, 0.5)`
   const darkSecondary = `rgba(26, 26, 26, 0.3)`
   const darkButton = `rgba(40, 18, 77, 1)`
   const darkText = `rgba(255, 255, 255, 0.5)`
-  
-  console.log('historyList', historyList)
 
   return (
     <div className="containerDark">
@@ -142,7 +167,7 @@ function App() {
                       </div>
 
                       <div>
-                          <p>Humidity:{humidity ? humidity : '58%'}</p>
+                          <p>Humidity:{humidity ? humidity + '%': '58%'}</p>
                       </div>
 
                       <div>
@@ -152,18 +177,27 @@ function App() {
       
               <div className='bottom' style={{backgroundColor: darkSecondary}}>
                   <p>Search History</p>
-                  <div className="historyContainer">
-                      {historyList ? historyList.map(data => {
+                  <div className="historyItemWrapper">
+                      {historyList && historyList.map((data, index) => {
                         return (
-                          <div className="historyItemContainer" style={{backgroundColor: darkButton}}>
+                          <div 
+                            className="historyItemSubWrapper" 
+                            style={{backgroundColor: darkButton}}
+                            key={`${data.location}-${index}`}
+                          >
                               <HistoryItem 
-                                key={`${data.location}-${data.key}`}
+                                id={index}
                                 location={data.countryName}
                                 time={data.time}
+                                handleSearch={searchLocation}
+                                handleDelete={deleteFromHistoryList}
+                                fullList={historyList}
                               />
                           </div>
                         )
-                      }) : <h1>No Record</h1>}
+                      })}
+
+                      {historyList.length === 0 && <h1>No Record</h1>}
                   </div>
               </div>
           </div>

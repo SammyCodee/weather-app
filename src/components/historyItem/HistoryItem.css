@@ -1,22 +1,38 @@
 
 
-.container {
+.historyItemContainer {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-    padding: 1.5rem;
+    padding: 1rem;
+    height:5vh;
+    align-items: center;
 }
 
-.leftContainer p {
+.historyItemLeftContainer {
+    width: 50%;
+}
+
+.historyItemLeftContainer p {
     font-weight: bolder;
-    color: white
+    color: white;
 }
 
-.rightContainer {
+.historyItemRightContainer {
+    width: 50%;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    margin-left: auto;
+    justify-content: flex-end;
 }
 
-.rightContainer p {
-    color: rgba(255, 255, 255, 0.5)
+.historyItemRightContainer p {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0.5rem
+}
+
+.historyRoundButtonContainer {
+    display: flex;
+    margin: 0 0.5rem
 }
