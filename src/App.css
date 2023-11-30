@@ -94,8 +94,8 @@ body {
 }
 
 .topRight {
-  height: 10vw;
-  width: 10vw;
+  height: 14vw;
+  width: 14vw;
   background-image: url('./assets/img/sun.png');
   /* Center and scale the image nicely */
   background-position: center;
@@ -103,7 +103,7 @@ body {
   background-size: cover;
   z-index: 100;
   position: absolute;
-  top: 10vh;
+  top: 18vh;
   right: 26vw;
 }
 
